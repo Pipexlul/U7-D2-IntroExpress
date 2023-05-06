@@ -25,19 +25,29 @@ const createSong = (req, res) => {
   }
 
   songs.push({ id, titulo, artista, tono });
-  fs.writeFileSync(pathToSongs, JSON.stringify(songs), "utf-8");
+  fs.writeFileSync(pathToSongs, JSON.stringify(songs, null, 2), "utf-8");
 
   res.status(201).end();
 };
 
 const updateSong = (req, res) => {
   const payloadData = req.body;
-  const id = req.params.id;
+  const idParam = req.params.id;
 
   // Loose compare so we don't have to check for null AND undefined
-  if (id == null) {
+  if (idParam == null) {
     res.status(400).json({
       error: "El id es obligatorio",
+    });
+
+    return;
+  }
+
+  const id = parseInt(idParam);
+
+  if (isNaN(id)) {
+    res.status(400).json({
+      error: "El id debe ser un número",
     });
 
     return;
@@ -59,23 +69,34 @@ const updateSong = (req, res) => {
   const curData = songs[songIndex];
 
   songs[songIndex] = {
+    id: curData.id,
     titulo: titulo ?? curData.titulo,
     artista: artista ?? curData.artista,
     tono: tono ?? curData.tono,
   };
 
-  fs.writeFileSync(pathToSongs, JSON.stringify(songs), "utf-8");
+  fs.writeFileSync(pathToSongs, JSON.stringify(songs, null, 2), "utf-8");
 
   res.status(201).end();
 };
 
 const deleteSong = (req, res) => {
-  const id = req.params.id;
+  const idParam = req.params.id;
 
   // Loose compare so we don't have to check for null AND undefined
-  if (id == null) {
+  if (idParam == null) {
     res.status(400).json({
       error: "El id es obligatorio",
+    });
+
+    return;
+  }
+
+  const id = parseInt(idParam);
+
+  if (isNaN(id)) {
+    res.status(400).json({
+      error: "El id debe ser un número",
     });
 
     return;
@@ -94,7 +115,7 @@ const deleteSong = (req, res) => {
 
   songs.splice(songIndex, 1);
 
-  fs.writeFileSync(pathToSongs, JSON.stringify(songs), "utf-8");
+  fs.writeFileSync(pathToSongs, JSON.stringify(songs, null, 2), "utf-8");
 
   res.status(204).end();
 };
