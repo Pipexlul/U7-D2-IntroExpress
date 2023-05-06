@@ -7,6 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": {
+    "name": "Felipe Guajardo",
+    "email": "felipgg@gmail.com",
+    "url": "https://github.com/pipexlul"
+  },
+  "license": "ISC",
+  "type": "module"
 }
