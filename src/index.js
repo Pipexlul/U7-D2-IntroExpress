@@ -11,6 +11,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
+
+app.get("/", songsRoutes.getIndex);
 
 app.get("/canciones", songsRoutes.getSongs);
 app.post("/canciones", validateMW, songsRoutes.createSong);
