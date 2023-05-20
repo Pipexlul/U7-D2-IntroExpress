@@ -5,6 +5,10 @@ const curPath = path.join(process.cwd(), "src", "routes");
 const targetPath = path.join(process.cwd(), "src", "data", "songs.json");
 const pathToSongs = path.resolve(curPath, targetPath);
 
+const getIndex = (req, res) => {
+  res.status(200).sendFile("index.html");
+};
+
 const getSongs = (req, res) => {
   const songs = JSON.parse(fs.readFileSync(pathToSongs, "utf-8"));
 
@@ -121,6 +125,7 @@ const deleteSong = (req, res) => {
 };
 
 export default {
+  getIndex,
   getSongs,
   createSong,
   updateSong,
